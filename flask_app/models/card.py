@@ -63,6 +63,11 @@ class Card:
         return response.json()
 
     @classmethod
+    def get_15(cls, name, page):
+        response = requests.get(f"https://api.pokemontcg.io/v2/cards?q=name:{name}&page={page}&pageSize=15")
+        return response.json()
+
+    @classmethod
     def get_one(cls, id):
         response = requests.get(f"https://api.pokemontcg.io/v2/cards/{id}")
         pprint(response)

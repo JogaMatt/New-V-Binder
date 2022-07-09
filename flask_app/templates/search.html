@@ -33,10 +33,23 @@
         </div>
         <!-- END NAVBAR -->
 
-        {% for card in cards %}
-            <img width="215px" height="323px" src={{card.images.large}} alt="">
-        {% endfor %}
-
+        <!-- CARD CONTAINER -->
+        <div class="card-container">
+            <div class="card-block-container">
+                {% for card in cards %}
+                    <div class="card-block">
+                        <p style="font-weight: 700;">{{card.set.name}}: {{card.name}}</p>
+                        <img class="pokemon-card" src={{card.images.large}} alt="">
+                    </div>
+                {% endfor %}
+            </div>
+            {% if cards|length >= 15 %}
+                <h1 style="color: black;">{{current_page}} of {{ (all_cards|length / 15)|round|int }}</h1>
+                {% else %}
+                <h1 style="color: black;">There's no more!</h1>
+            {% endif %}
+        </div>
+        <!-- END CARD CONTAINER -->
     </div>
 </body>
 </html>

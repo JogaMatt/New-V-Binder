@@ -9,10 +9,13 @@ from pprint import pprint
 @app.route('/search_card', methods=['POST'])
 def search_card():
     search_term = request.form['search-bar'].replace(' ', '*')
-    return redirect(f'/search/{search_term}')
+    return redirect(f'/search/{search_term}/1')
 
-@app.route('/search/<name>')
-def search_results(name):
-    cards = Card.get_all(name)
-    # pprint(cards['data'][0]['id'])
-    return render_template('search.html', cards = cards['data'], search = name.replace('*', ' '))
+# ~~~~~ PASS SEARCHED CARD TO SEARCH PAGE ~~~~~
+@app.route('/search/<name>/<page>')
+def search_results(name, page):
+    all_cards_in_api = Card.get_all(name)
+    cards = Card.get_15(name, page)
+    current_page = int(page)
+
+    return render_template('search.html', cards = cards['data'], current_page = current_page, all_cards = all_cards_in_api['data'], search = name.replace('*', ' '))
