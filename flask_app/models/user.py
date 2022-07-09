@@ -16,6 +16,7 @@ class User:
         self.username = data['username']
         self.profile_icon = data['profile_icon']
         self.profile_bio = data['profile_bio']
+        self.address = data['address']
         self.email = data['email']
         self.password = data['password']
         self.created_at = data['created_at']
@@ -25,18 +26,18 @@ class User:
 
     @classmethod
     def save(cls, data:dict ) -> int:
-        query = "INSERT INTO users (first_name, last_name, username, address, profile_icon, email, password) VALUES ( %(first_name)s, %(last_name)s, %(username)s, %(address)s, %(profile_icon)s, %(email)s, %(password)s);"
+        query = "INSERT INTO users (first_name, last_name, username, email, password) VALUES ( %(first_name)s, %(last_name)s, %(username)s, %(email)s, %(password)s);"
         return connectToMySQL(DATABASE).query_db( query, data )
 
     @classmethod
     def update(cls,data):
-        query = "UPDATE users SET username=%(username)s,profile_icon=%(profile_icon)s,profile_bio=%(profile_bio)s,email=%(email)s,updated_at=NOW() WHERE id = %(id)s;"
+        query = "UPDATE users SET username=%(username)s, profile_icon=%(profile_icon)s, profile_bio=%(profile_bio)s, address=%(address)s, email=%(email)s, updated_at=NOW() WHERE id = %(id)s;"
         return connectToMySQL(DATABASE).query_db(query,data)
 
         ## ! used in user validation
     @classmethod
-    def get_by_username(cls,data:dict):
-        query = "SELECT * FROM users WHERE username = %(username)s;"
+    def get_by_email(cls,data:dict):
+        query = "SELECT * FROM users WHERE email = %(email)s;"
         result = connectToMySQL(DATABASE).query_db(query,data)
         # Didn't find a matching user
         if len(result) < 1:
