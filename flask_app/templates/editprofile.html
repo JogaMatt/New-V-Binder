@@ -41,7 +41,11 @@
                     </div>
 
                     <div class="form-outline mb-4">
-                        <textarea type="text" id="form3Example1cg" name="profile_bio" class="form-control form-control-md"></textarea>
+                        {% if current_user.profile_bio|length > 1 %}
+                            <textarea type="text" id="form3Example1cg" name="profile_bio" class="form-control form-control-md">{{current_user.profile_bio}}</textarea>
+                            {% else %}
+                            <textarea type="text" id="form3Example1cg" name="profile_bio" class="form-control form-control-md"></textarea>
+                        {% endif %}
                         <label class="form-label" for="form3Example1cg">Profile Bio</label>
                     </div>
         
@@ -72,45 +76,78 @@
                         <input type="text" id="form3Example3" class="form-control form-control-lg" placeholder="Zip Code" name="zipcode"/>
                       </div>
 
-                    <div class="form-outline mb-4">
-                        <div class="file-holder">
-                            <input type="file" name="profile_icon" id="fileInput">
-                        </div>
+                    <div class="card-condition">
+                        <label class="option_item">
+                            <input type="radio" name="profile_icon" class="checkbox" value="https://cdn-icons-png.flaticon.com/512/188/188987.png">
+                            <div class="option_inner d">
+                                <div class="tickmark"></div>
+                                <img width='80px' src="https://cdn-icons-png.flaticon.com/512/188/188987.png" alt="">
+                            </div>
+                        </label>
+
+                        <label class="option_item">
+                            <input type="radio" name="profile_icon" class="checkbox" value="https://cdn-icons-png.flaticon.com/512/188/188995.png">
+                            <div class="option_inner d">
+                                <div class="tickmark"></div>
+                                <img width='80px' src="https://cdn-icons-png.flaticon.com/512/188/188995.png" alt="">
+                            </div>
+                        </label>
+
+                        <label class="option_item">
+                            <input type="radio" name="profile_icon" class="checkbox" value="https://cdn-icons-png.flaticon.com/512/189/189000.png">
+                            <div class="option_inner d">
+                                <div class="tickmark"></div>
+                                <img width='80px' src="https://cdn-icons-png.flaticon.com/512/189/189000.png" alt="">
+                            </div>
+                        </label>
+
+                        <label class="option_item">
+                            <input type="radio" name="profile_icon" class="checkbox" value="https://cdn-icons-png.flaticon.com/512/188/188988.png">
+                            <div class="option_inner d">
+                                <div class="tickmark"></div>
+                                <img width='80px' src="https://cdn-icons-png.flaticon.com/512/188/188988.png" alt="">
+                            </div>
+                        </label>
+
+                        <label class="option_item">
+                            <input type="radio" name="profile_icon" class="checkbox" value="https://cdn-icons-png.flaticon.com/512/189/189006.png">
+                            <div class="option_inner d">
+                                <div class="tickmark"></div>
+                                <img width='80px' src="https://cdn-icons-png.flaticon.com/512/189/189006.png" alt="">
+                            </div>
+                        </label>
+
+                        <label class="option_item">
+                            <input type="radio" name="profile_icon" class="checkbox" value="https://cdn-icons-png.flaticon.com/512/188/188996.png">
+                            <div class="option_inner d">
+                                <div class="tickmark"></div>
+                                <img width='80px' src="https://cdn-icons-png.flaticon.com/512/188/188996.png" alt="">
+                            </div>
+                        </label>
+
+                        <label class="option_item">
+                            <input type="radio" name="profile_icon" class="checkbox" value="https://cdn-icons-png.flaticon.com/512/188/188990.png">
+                            <div class="option_inner d">
+                                <div class="tickmark"></div>
+                                <img width='80px' src="https://cdn-icons-png.flaticon.com/512/188/188990.png" alt="">
+                            </div>
+                        </label>
+
+                        <label class="option_item">
+                            <input type="radio" name="profile_icon" class="checkbox" value="https://cdn-icons-png.flaticon.com/512/188/188989.png">
+                            <div class="option_inner d">
+                                <div class="tickmark"></div>
+                                <img width='80px' src="https://cdn-icons-png.flaticon.com/512/188/188989.png" alt="">
+                            </div>
+                        </label>
                     </div>
 
                     <div class="d-flex justify-content-center">
                         <button type="submit" class="update-button">Update</button>
                     </div>
                 </form>
-            <div class="flash">
-                {% with messages = get_flashed_messages() %}    
-                    {% if messages %}                        
-                        {% for message in messages %}     
-                            <p style="color: red;">{{message}}</p>
-                        {% endfor %}
-                    {% endif %}
-                {% endwith %}
-            </div>
             </div>
         </div>
     </div>
-    <script>
-        $(document).ready(function(){
-            $("#fileInput").change(function(){
-                var fileLength = this.file.length;
-                var match = ['image/jpeg', 'image/png', 'image/jpg', 'image/gif'];
-                var i;
-                for(i = 0; i < fileLength; i++){
-                    var file = this.files[i];
-                    var imagefile = file.type;
-                    if(!((imagefile == match[0]) || (imagefile == match[1]) || (imagefile == match[2]) || (imagefile == match[3]))){
-                        alert('Please select a valid image file (JPEG/JPG/PNG/GIF).');
-                        $("#fileInput").val('');
-                        return false;
-                    }
-                }
-            })
-        })
-    </script>
 </body>
 </html>

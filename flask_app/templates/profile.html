@@ -33,11 +33,15 @@
         </div>
         <!-- END NAVBAR -->
         <div class="card-container">
+
+            <!-- PROFILE TOP -->
             <div class="profile-top">
                 <div class="profile-info">
                     <div class="profile-icon">
                         {% if current_user.profile_icon == None %}
                             <img class="profile-image" src="{{ url_for('static', filename='image/virtual_binder_logo.png') }}" alt="">
+                            {% else %}
+                            <img class="profile-image" src={{current_user.profile_icon}} alt="">
                         {% endif %}
                     </div>
                     <div class="profile-text-box">
@@ -52,11 +56,36 @@
                 <hr>
                 <div class="profile-links">
                     <a href="/about"><p style="font-size: 14pt; font-weight: 500; margin-right: 25px">About</p></a>
-                    <a href="/my_binders"><p style="font-size: 14pt; font-weight: 500; margin-right: 25px">My Binders</p></a>
                     <a href="/messages"><p style="font-size: 14pt; font-weight: 500; margin-right: 25px">Messages</p></a>
                     <a href="/friends"><p style="font-size: 14pt; font-weight: 500; margin-right: 25px">Friends</p></a>
                 </div>
             </div>
+            <!-- END PROFILE TOP -->
+
+            <!-- PROFILE BOTTOM -->
+            <div class="profile-bottom">
+                <div class="profile-bottom-left">
+                    {% for binder in my_binders %}
+                        <a href="/binder/{{binder.id}}"><div class="binder">
+                            <p style="font-size: 16; font-weight: 700; color: gray">{{binder.name}}</p>
+                        </div></a>
+                    {% endfor %}
+                </div>
+
+                <div class="profile-bottom-right">
+                    <div class="post-form">
+                        <form action="" method="post">
+                            
+                        </form>
+                    </div>
+                    <hr>
+                    <div class="incoming-posts">
+
+                    </div>
+                </div>
+
+            </div>
+            <!-- END PROFILE BOTTOM -->
         </div>
     </div>
 </body>

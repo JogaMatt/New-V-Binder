@@ -88,31 +88,9 @@ a{
 }
 
 .profile-bottom{
-    display: flex;
-    justify-content: space-between;
-}
-
-.profile-bottom-left{
-    width: 600px;
-    background-color: white;
-    padding: 15px;
-    border-radius: 10px;
-    box-shadow: 3px 3px 3px #243b55;
-    background-color: white;
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.profile-bottom-left > a{
-    width: 200px;
-    height: 75px;
-    margin: 0 15px 15px 0;
-}
-
-.profile-bottom-right{
-    width: 850px;
+    width: 1000px;
     height: 800px;
-    /* margin: auto; */
+    margin: auto;
     padding: 15px;
     border-radius: 10px;
     box-shadow: 3px 3px 3px #243b55;
@@ -127,11 +105,3 @@ a{
     box-shadow: 3px 3px 3px #243b55;
     background-color: #f5f6f7;
 }
-
-.binder{
-    width: 200px;
-    height: 75px;
-    background-color: #7db6ef;
-    padding: 25px 0 0 45px;
-}
-

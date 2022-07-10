@@ -85,14 +85,15 @@ def homepage():
 def profile():
     if 'user_id' not in session:
         return redirect('/login')
-    all_binders = Binder.get_all_binders()
+    # all_binders = Binder.get_all_binders()
 
     data = {
         'id': session['user_id']
     }
+    my_binders = Binder.get_current_users_binders(data)
     current_user = User.get_by_id(data)
     
-    return render_template('profile.html', all_binders = all_binders, current_user = current_user)
+    return render_template('profile.html', my_binders = my_binders, current_user = current_user)
 
 # ~~~~~ EDIT PROFILE INFO ~~~~~
 @app.route('/about')
@@ -113,15 +114,12 @@ def save_update():
     city = request.form['city']
     state = request.form['state']
     zipcode = request.form['zipcode']
-    file = request.files['profile_icon']
-
-    binary_image = file.read()
 
     address = street_address + ' ' + city + ', ' + state + ' ' + zipcode
     
     data = {
         'username': request.form['username'],
-        'profile_icon': binary_image,
+        'profile_icon': request.form['profile_icon'],
         'profile_bio': request.form['profile_bio'],
         'address': address,
         'id': session['user_id']
@@ -130,7 +128,7 @@ def save_update():
 
     session['username'] = request.form['username']
 
-    pprint(data)
-    # User.update(data)
+    # pprint(data)
+    User.update(data)
 
     return redirect('/profile')

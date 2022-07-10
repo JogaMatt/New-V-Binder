@@ -91,15 +91,120 @@ a{
     width: 1000px;
     margin: auto;
     padding: 30px;
-    background-color: white;
+    background-image: linear-gradient(to bottom, white, rgb(221, 221, 221));
     border-radius: 10px;
     box-shadow: 3px 3px 3px #141e30;
 }
 
-.file-holder{
-    width: 940px;
-    padding: 10px;
-    background-color: white;
-    border: 1px solid #cbcdd1;
+.card-condition{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 100px;
+}
+
+.card-condition .option_item{
+    display: block;
+    position: relative;
+    width: 100px;
+    height: 100px;
+    margin: 0 10px 10px 0;
+}
+
+.option_item .option_inner{
+    width: 100%;
+    height: 100%;
+    background: #fff;
     border-radius: 5px;
+    text-align: center;
+    padding-top: 5px;
+    cursor: pointer;
+    color: #585c68;
+    display: block;
+    border: 5px solid transparent;
+    position: relative;
+}
+
+.option_item .checkbox{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 1;
+    opacity: 0;
+}
+
+.option_item .option_inner .name{
+    user-select: none;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.option_item .checkbox:checked ~ .option_inner.nm-m{
+    border-color: #25D366;
+    color: #25D366;
+}
+
+.option_item .checkbox:checked ~ .option_inner.lp{
+    border-color: #0061FF;
+    color: #0061FF;
+}
+
+.option_item .checkbox:checked ~ .option_inner.mp{
+    border-color: #34465D;
+    color: #34465D;
+}
+
+.option_item .checkbox:checked ~ .option_inner.hp{
+    border-color: #FF6600;
+    color: #FF6600;
+}
+
+.option_item .checkbox:checked ~ .option_inner.d{
+    border-color: #DF2029;
+    color: #DF2029;
+}
+
+.option_item .option_inner .tickmark{
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    border: 20px solid;
+    border-color: #000 transparent transparent #000;
+    display: none;
+}
+
+.option_item .checkbox:checked ~ .option_inner .tickmark{
+    display: block;
+}
+
+.option_item .option_inner .tickmark:before{
+    content: '';
+    position: absolute;
+    top: -12px;
+    left: -16px;
+    width: 20px;
+    height: 5px;
+    border: 2.5px solid;
+    border-color: transparent transparent #fff #fff;
+    transform: rotate(-45deg);
+}
+
+.option_item .option_inner.nm-m .tickmark{
+    border-color: #25D366 transparent transparent #25D366 ;
+}
+
+.option_item .option_inner.lp .tickmark{
+    border-color: #0061FF transparent transparent #0061FF ;
+}
+
+.option_item .option_inner.mp .tickmark{
+    border-color: #34465D transparent transparent #34465D ;
+}
+
+.option_item .option_inner.hp .tickmark{
+    border-color: #FF6600 transparent transparent #FF6600 ;
+}
+
+.option_item .option_inner.d .tickmark{
+    border-color: #DF2029 transparent transparent #DF2029 ;
 }
