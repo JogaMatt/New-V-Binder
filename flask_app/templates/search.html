@@ -25,7 +25,7 @@
                 <h5 style="display: flex; justify-content: flex-end">Welcome, {{session['username']}}!</h5>
                 <div class="links">
                     <a href="/profile"><h5>Profile</h5></a>
-                    <a href="/expansions"><h5>Expansions</h5></a>
+                    <a href="/expansions/1"><h5>Expansions</h5></a>
                     <a href="/create_binder"><h5>Create Binder</h5></a>
                     <a href="/trades"><h5>Public Trades</h5></a>
                     <a href="/sign_out"><h5>Sign Out</h5></a>
@@ -43,6 +43,9 @@
                         <a href="/details/{{card.id}}"><img class="pokemon-card" src={{card.images.large}} alt=""></a>
                     </div>
                 {% endfor %}
+            </div>
+            <div class="page-button">
+                
             </div>
             {% if cards|length >= 15 %}
                 <h1 style="color: black;">{{current_page}} of {{ (all_cards|length / 15)|round|int }}</h1>

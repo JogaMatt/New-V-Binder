@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/mdb.min.css') }}" />
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/carddetails.css') }}">
-    <title></title>
+    <title>{{card.name}} {{card.number}}/{{card.set.printedTotal}}</title>
 </head>
 <body>
     <div id="container">
@@ -46,10 +46,9 @@
 
 
                     <!-- BINDERS -->
-                    <h3 style="margin-bottom: 30px;">Select a binder</h3>
+                    <h3 style="margin-bottom: 30px; text-align: center;">Select a binder</h3>
                     <div class="save-box user-binders">
-                        {% for binder in all_binders %}
-                            {% if binder.user_id == session['user_id'] %}
+                        {% for binder in my_binders %}
                                 <label class="option_item">
                                     <input type="radio" name="binder_id" class="checkbox" value="{{binder.id}}">
                                     <div class="option_inner nm-m">
@@ -57,12 +56,11 @@
                                         <div class="name">{{binder.name}}</div>
                                     </div>
                                 </label>
-                            {% endif %}
                         {% endfor %}
                     </div>
 
                     <!-- CARD CONDITIONS -->
-                    <h3 style="margin-bottom: 30px;">Select your card's condition</h3>
+                    <h3 style="margin-bottom: 30px; text-align: center;">Select your card's condition</h3>
                     <div class="save-box card-condition">
 
                         <label class="option_item">
@@ -108,50 +106,56 @@
 
                     <!-- QUANTITY -->
                     <div class="save-box quantity">
-                        <h3>Select a quantity</h3>
-                        <label class="option_item">
-                            <input type="radio" name="quantity" class="checkbox" value="1">
-                            <div class="option_inner lp">
-                                <div class="tickmark"></div>
-                                <div class="name">1</div>
-                            </div>
-                        </label>
+                        <h3 style='text-align: center;'>Select a quantity</h3>
+                        <div style="width: 400px; margin: auto;">
+                            <label class="option_item">
+                                <input type="radio" name="quantity" class="checkbox" value="1">
+                                <div class="option_inner lp">
+                                    <div class="tickmark"></div>
+                                    <div class="name">1</div>
+                                </div>
+                            </label>
 
-                        <label class="option_item">
-                            <input type="radio" name="quantity" class="checkbox" value="2">
-                            <div class="option_inner lp">
-                                <div class="tickmark"></div>
-                                <div class="name">2</div>
-                            </div>
-                        </label>
+                            <label class="option_item">
+                                <input type="radio" name="quantity" class="checkbox" value="2">
+                                <div class="option_inner lp">
+                                    <div class="tickmark"></div>
+                                    <div class="name">2</div>
+                                </div>
+                            </label>
 
-                        <label class="option_item">
-                            <input type="radio" name="quantity" class="checkbox" value="3">
-                            <div class="option_inner lp">
-                                <div class="tickmark"></div>
-                                <div class="name">3</div>
-                            </div>
-                        </label>
+                            <label class="option_item">
+                                <input type="radio" name="quantity" class="checkbox" value="3">
+                                <div class="option_inner lp">
+                                    <div class="tickmark"></div>
+                                    <div class="name">3</div>
+                                </div>
+                            </label>
 
-                        <label class="option_item">
-                            <input type="radio" name="quantity" class="checkbox" value="4">
-                            <div class="option_inner lp">
-                                <div class="tickmark"></div>
-                                <div class="name">4</div>
-                            </div>
-                        </label>
+                            <label class="option_item">
+                                <input type="radio" name="quantity" class="checkbox" value="4">
+                                <div class="option_inner lp">
+                                    <div class="tickmark"></div>
+                                    <div class="name">4</div>
+                                </div>
+                            </label>
 
-                        <label class="option_item">
-                            <input type="radio" name="quantity" class="checkbox" value="5">
-                            <div class="option_inner lp">
-                                <div class="tickmark"></div>
-                                <div class="name">5</div>
-                            </div>
-                        </label>
+                            <label class="option_item">
+                                <input type="radio" name="quantity" class="checkbox" value="5">
+                                <div class="option_inner lp">
+                                    <div class="tickmark"></div>
+                                    <div class="name">5</div>
+                                </div>
+                            </label>
+                        </div>
                     </div>
-                    <div class="d-flex justify-content-center">
-                        <button type="submit" class="save-card">STASH YOUR CARD(S) AWAY</button>
-                    </div>
+                    {% if my_binders|length < 1 %}
+                        <h1 style="color: red; margin-top: 45px; text-align: center;">NO BINDERS DETECTED</h1>
+                        {% else %}
+                            <div class="d-flex justify-content-center">
+                                <button type="submit" class="save-card">STASH YOUR CARD(S) AWAY</button>
+                            </div>
+                    {% endif %}
                 </form>
             </div>
         </div>

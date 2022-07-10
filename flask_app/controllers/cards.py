@@ -36,7 +36,13 @@ def card_details(id):
     card = Card.get_one(id)
     pprint(card['data'])
     all_binders = Binder.get_all_binders()
-    return render_template('carddetails.html', card = card['data'], all_binders = all_binders)
+
+    data = {
+        'id': session['user_id']
+    }
+
+    current_users_binders = Binder.get_current_users_binders(data)
+    return render_template('carddetails.html', card = card['data'], all_binders = all_binders, my_binders = current_users_binders)
 
 # ~~~~~ SAVE CARD TO BINDER ~~~~~
 @app.route('/save_card', methods=['POST'])
@@ -55,26 +61,8 @@ def save_to_binder():
 
     quantity = request.form['quantity']
     pprint(quantity)
-    
-    if quantity == "1":
-        Card.save(data)
-    elif quantity == "2":
-        Card.save(data)
-        Card.save(data)
-    elif quantity == "3":
-        Card.save(data)
-        Card.save(data)
-        Card.save(data)
-    elif quantity == "4":
-        Card.save(data)
-        Card.save(data)
-        Card.save(data)
-        Card.save(data)
-    elif quantity == "5":
-        Card.save(data)
-        Card.save(data)
-        Card.save(data)
-        Card.save(data)
+
+    for x in range(0, int(quantity)):
         Card.save(data)
 
     session['binder_id'] = request.form['binder_id']

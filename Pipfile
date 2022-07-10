@@ -9,8 +9,8 @@ pymysql = "*"
 bcrypt = "*"
 flash = "*"
 flask-bcrypt = "*"
-requests = "*"
 regex = "*"
+requests = "*"
 
 [dev-packages]
 

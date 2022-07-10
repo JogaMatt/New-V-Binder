@@ -1,5 +1,6 @@
 from flask_app import app, Bcrypt
 from flask import render_template,redirect,request,session,flash
+from flask_app.models.binder import Binder
 from flask_app.models.user import User
 
 from pprint import pprint
@@ -78,3 +79,58 @@ def homepage():
     if 'user_id' not in session:
         return redirect('/')
     return render_template('homepage.html')
+
+# ~~~~~ GO TO PROFILE PAGE ~~~~~
+@app.route('/profile')
+def profile():
+    if 'user_id' not in session:
+        return redirect('/login')
+    all_binders = Binder.get_all_binders()
+
+    data = {
+        'id': session['user_id']
+    }
+    current_user = User.get_by_id(data)
+    
+    return render_template('profile.html', all_binders = all_binders, current_user = current_user)
+
+# ~~~~~ EDIT PROFILE INFO ~~~~~
+@app.route('/about')
+def edit_profile():
+    if 'user_id' not in session:
+        return redirect('/login')
+    data = {
+        'id': session['user_id']
+    }
+    current_user = User.get_by_id(data)
+
+    return render_template('editprofile.html', current_user = current_user)
+
+# ~~~~~ SAVE UPDATE ~~~~~
+@app.route('/save_update', methods=['POST'])
+def save_update():
+    street_address = request.form['street']
+    city = request.form['city']
+    state = request.form['state']
+    zipcode = request.form['zipcode']
+    file = request.files['profile_icon']
+
+    binary_image = file.read()
+
+    address = street_address + ' ' + city + ', ' + state + ' ' + zipcode
+    
+    data = {
+        'username': request.form['username'],
+        'profile_icon': binary_image,
+        'profile_bio': request.form['profile_bio'],
+        'address': address,
+        'id': session['user_id']
+    }
+
+
+    session['username'] = request.form['username']
+
+    pprint(data)
+    # User.update(data)
+
+    return redirect('/profile')

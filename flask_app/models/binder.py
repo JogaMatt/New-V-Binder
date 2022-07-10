@@ -33,6 +33,16 @@ class Binder:
         return binders
 
     @classmethod
+    def get_current_users_binders(cls, data):
+        query = "SELECT * FROM binders WHERE user_id = %(id)s;"
+        results = connectToMySQL(DATABASE).query_db(query, data)
+        pprint(results)
+        binders = []
+        for row in results:
+            binders.append( cls(row) )
+        return binders
+
+    @classmethod
     def get_one(cls,data):
         query  = "SELECT * FROM binders LEFT JOIN cards ON binders.id = cards.binder_id WHERE binders.id = %(id)s";
         results = connectToMySQL(DATABASE).query_db(query,data)

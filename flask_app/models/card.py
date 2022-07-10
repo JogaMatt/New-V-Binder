@@ -1,8 +1,6 @@
 from pprint import pprint
-from urllib import response
 from flask_app.config.mysqlconnection import connectToMySQL
-from flask_app import flash, re
-import requests
+from flask_app import flash, re, requests
 from flask_app.models.user import User
 
 DATABASE = 'my_v_binder'

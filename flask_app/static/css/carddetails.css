@@ -28,6 +28,7 @@
 
 .search-bar{
     width: 700px;
+    border-radius: 30px;
 }
 
 .right-nav{
