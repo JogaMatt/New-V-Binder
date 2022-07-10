@@ -12,13 +12,13 @@ class Card:
         self.id = data['id']
         self.name = data['name']
         self.card_condition = data['card_condition']
-        self.api_id = data['api_id']
+        self.image_address = data['image_address']
         self.card_id = data['card_id']
         self.binder_id = data['binder_id']
 
     @classmethod
     def save(cls, data:dict ) -> int:
-        query = "INSERT INTO cards (name, card_condition, api_id, card_id, binder_id) VALUES ( %(name)s, %(card_condition)s, %(api_id)s, %(card_id)s, %(binder_id)s);"
+        query = "INSERT INTO cards (name, card_condition, image_address, card_id, binder_id) VALUES ( %(name)s, %(card_condition)s, %(image_address)s, %(card_id)s, %(binder_id)s);"
         return connectToMySQL(DATABASE).query_db( query, data )
 
     @classmethod
@@ -65,6 +65,11 @@ class Card:
     @classmethod
     def get_15(cls, name, page):
         response = requests.get(f"https://api.pokemontcg.io/v2/cards?q=name:{name}&page={page}&pageSize=15")
+        return response.json()
+
+    @classmethod
+    def get_all_sets(cls, page):
+        response = requests.get(f"https://api.pokemontcg.io/v2/sets?page={page}&pageSize=30")
         return response.json()
 
     @classmethod

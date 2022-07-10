@@ -18,13 +18,14 @@
             <div class="left-nav">
                 <a href="/homepage"><img width="75px" src="{{ url_for('static', filename='image/virtual_binder_logo.png') }}" alt=""></a>
                 <form action="/search_card" method="post">
-                    <input type="text" id="form3Example4cdg" name="search-bar" class="form-control form-control-md search-bar" />
+                    <input type="text" id="form3Example4cdg" name="search-bar" class="form-control form-control-md search-bar"  placeholder="It all begins here..." />
                 </form>
             </div>
             <div class="right-nav">
                 <h5 style="display: flex; justify-content: flex-end">Welcome, {{session['username']}}!</h5>
                 <div class="links">
                     <a href="/profile"><h5>Profile</h5></a>
+                    <a href="/expansions/1"><h5>Expansions</h5></a>
                     <a href="/create_binder"><h5>Create Binder</h5></a>
                     <a href="/trades"><h5>Public Trades</h5></a>
                     <a href="/sign_out"><h5>Sign Out</h5></a>
@@ -45,7 +46,7 @@
                         <br>
                         <p style="font-weight: 800; color: white; font-size: 14pt">Start adding the new expansion <br/>to your binders today!</p>
                     </div>
-                    <img class="banner-one-image" src="{{ url_for('static', filename='image/mewtwo-v.png') }}" alt="">
+                    <a href="/details/pgo-72"><img class="banner-one-image" src="{{ url_for('static', filename='image/mewtwo-v.png') }}" alt=""></a>
                 </div>
             </div>
 

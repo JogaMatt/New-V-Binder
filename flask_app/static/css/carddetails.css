@@ -1,0 +1,211 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+
+#container{
+    width: inherit;
+    background-image: linear-gradient(to bottom, #243b55, #141e30);
+    /* height: 1200px; */
+}
+
+.navbar{
+    width: inherit;
+    height: 100px;
+    padding: 15px;
+    justify-content: space-between;
+    background-color: white;
+    border-bottom: 5px solid black;
+}
+
+.left-nav{
+    width: 800px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.search-bar{
+    width: 700px;
+}
+
+.right-nav{
+    width: 650px;
+}
+
+.links{
+    display: flex;
+    justify-content: space-between;
+}
+
+a{
+    text-decoration: none;
+    color: black;
+}
+
+.card-container{
+    width: 1600px;
+    /* height: 1641px; */
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    background-color: #dde1e4;
+    padding: 20px;
+}
+
+.card-block-container{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.card-block{
+    width: 300px;
+    height: 400px;
+    background-color: white;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    box-shadow: 3px 3px 3px gray;
+}
+
+.set-logo{
+    width: 250px;
+    margin: auto;
+}
+
+.poke-card-details{
+    width: 600px;
+    box-shadow: 5px 5px 5px gray;
+    border-radius: 30px;
+}
+
+.save-box{
+    width: 700px;
+    height: 130px;
+}
+
+.card-condition{
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 100px;
+}
+
+.card-condition .option_item{
+    display: block;
+    position: relative;
+    width: 200px;
+    height: 75px;
+    margin: 0 10px 10px 0;
+}
+
+.option_item .option_inner{
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    border-radius: 5px;
+    text-align: center;
+    padding: 20px 24px;
+    cursor: pointer;
+    color: #585c68;
+    display: block;
+    border: 5px solid transparent;
+    position: relative;
+}
+
+.option_item .checkbox{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 1;
+    opacity: 0;
+}
+
+.option_item .option_inner .name{
+    user-select: none;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.option_item .checkbox:checked ~ .option_inner.nm-m{
+    border-color: #25D366;
+    color: #25D366;
+}
+
+.option_item .checkbox:checked ~ .option_inner.lp{
+    border-color: #0061FF;
+    color: #0061FF;
+}
+
+.option_item .checkbox:checked ~ .option_inner.mp{
+    border-color: #34465D;
+    color: #34465D;
+}
+
+.option_item .checkbox:checked ~ .option_inner.hp{
+    border-color: #FF6600;
+    color: #FF6600;
+}
+
+.option_item .checkbox:checked ~ .option_inner.d{
+    border-color: #DF2029;
+    color: #DF2029;
+}
+
+.option_item .option_inner .tickmark{
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    border: 20px solid;
+    border-color: #000 transparent transparent #000;
+    display: none;
+}
+
+.option_item .checkbox:checked ~ .option_inner .tickmark{
+    display: block;
+}
+
+.option_item .option_inner .tickmark:before{
+    content: '';
+    position: absolute;
+    top: -12px;
+    left: -16px;
+    width: 20px;
+    height: 5px;
+    border: 2.5px solid;
+    border-color: transparent transparent #fff #fff;
+    transform: rotate(-45deg);
+}
+
+.option_item .option_inner.nm-m .tickmark{
+    border-color: #25D366 transparent transparent #25D366 ;
+}
+
+.option_item .option_inner.lp .tickmark{
+    border-color: #0061FF transparent transparent #0061FF ;
+}
+
+.option_item .option_inner.mp .tickmark{
+    border-color: #34465D transparent transparent #34465D ;
+}
+
+.option_item .option_inner.hp .tickmark{
+    border-color: #FF6600 transparent transparent #FF6600 ;
+}
+
+.option_item .option_inner.d .tickmark{
+    border-color: #DF2029 transparent transparent #DF2029 ;
+}
+
+.save-card{
+    height: 48px;
+    width: 700px;
+    background-image: linear-gradient(109.6deg, rgb(117, 224, 219) 11.2%, rgba(110,123,251,1) 91.1% );
+    border: none;
+    border-radius: 5px;
+    font-size: x-large;
+    font-weight: 600;
+    color: ghostwhite;
+    box-shadow: 2px 2px 2px #141e30;
+}
