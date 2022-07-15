@@ -1,6 +1,7 @@
 from flask_app import app, Bcrypt
 from flask import render_template,redirect,request,session,flash
 from flask_app.models.binder import Binder
+from flask_app.models.message import Message
 from flask_app.models.user import User
 
 from pprint import pprint
@@ -92,8 +93,13 @@ def profile():
     }
     my_binders = Binder.get_current_users_binders(data)
     current_user = User.get_by_id(data)
+
+    data = {
+        'receiver_id': session['user_id']
+    }
+    my_messages = Message.get_my_messages(data)
     
-    return render_template('profile.html', my_binders = my_binders, current_user = current_user)
+    return render_template('profile.html', my_binders = my_binders, current_user = current_user, my_messages = my_messages)
 
 # ~~~~~ EDIT PROFILE INFO ~~~~~
 @app.route('/about')
@@ -120,7 +126,6 @@ def save_update():
     data = {
         'username': request.form['username'],
         'profile_icon': request.form['profile_icon'],
-        'profile_bio': request.form['profile_bio'],
         'address': address,
         'id': session['user_id']
     }

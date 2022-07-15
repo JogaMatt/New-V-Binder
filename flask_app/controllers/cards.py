@@ -18,10 +18,12 @@ def search_results(name, page):
     if 'user_id' not in session:
         return redirect('/homepage')
     all_cards_in_api = Card.get_all(name)
+    pprint(len(all_cards_in_api['data']))
     cards = Card.get_15(name, page)
     current_page = int(page)
+    
 
-    return render_template('search.html', cards = cards['data'], current_page = current_page, all_cards = all_cards_in_api['data'], search = name.replace('*', ' '))
+    return render_template('search.html', cards = cards['data'], current_page = current_page, all_cards = all_cards_in_api['data'], search = name.replace('*', ' '), name = name)
 
 # ~~~~~ BROWSE ALL AVAILABLE EXPANSIONS ~~~~~
 @app.route('/expansions/<page>')
@@ -37,12 +39,19 @@ def card_details(id):
     pprint(card['data'])
     all_binders = Binder.get_all_binders()
 
+    # PULLS ALL USERS WHO HAVE THIS CARD IN A TRADE BINDER 
+    data = {
+        'id': id
+    }
+    users_with_card = Card.get_one_with_users(data)
+    pprint(users_with_card)
+
     data = {
         'id': session['user_id']
     }
 
     current_users_binders = Binder.get_current_users_binders(data)
-    return render_template('carddetails.html', card = card['data'], all_binders = all_binders, my_binders = current_users_binders)
+    return render_template('carddetails.html', card = card['data'], all_binders = all_binders, my_binders = current_users_binders, users_with_card = users_with_card)
 
 # ~~~~~ SAVE CARD TO BINDER ~~~~~
 @app.route('/save_card', methods=['POST'])
@@ -68,3 +77,26 @@ def save_to_binder():
     session['binder_id'] = request.form['binder_id']
 
     return redirect('/homepage')
+
+
+# ~~~~~ GO TO PUBLIC TRADES ~~~~~
+@app.route('/trades')
+def public_trades():
+    if 'user_id' not in session:
+        return redirect('/login')
+
+    public_trades = Card.public_trades()
+    pprint(public_trades)
+    all_users = User.get_all_users()
+
+    return render_template('publictrades.html', public_trades = public_trades, all_users = all_users)
+
+# ~~~~~ SEARCH PUBLIC TRADE LIST ~~~~~
+@app.route('/search_trades', methods=['POST'])
+def search_trades():
+    data = {
+        'name': request.form['search-bar-trades']
+    }
+    results = Card.search_trade_list(data)
+    pprint(results)
+    return render_template('searchtrades.html', results = results)

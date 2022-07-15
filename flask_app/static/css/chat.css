@@ -96,7 +96,7 @@ a{
 
 .card-container{
     width: 1600px;
-    height: 1641px;
+    /* height: 1641px; */
     margin: auto;
     background-color: #dde1e4;
     padding: 20px;
@@ -136,4 +136,42 @@ a{
     font-weight: 600;
     color: ghostwhite;
     box-shadow: 2px 2px 2px #141e30;
+}
+
+.send-message{
+    height: 48px;
+    width: 1170px;
+    background-image: linear-gradient(109.6deg, rgb(117, 224, 201) 11.2%, rgb(110, 251, 148) 91.1% );
+    border: none;
+    border-radius: 5px;
+    font-size: x-large;
+    font-weight: 600;
+    color: ghostwhite;
+    box-shadow: 2px 2px 2px #141e30;
+}
+
+.chat-box{
+    width: 1200px;
+    margin: auto;
+    background-color: white;
+    padding: 15px;
+}
+
+.sender-box,
+.receiver-box{
+    width: 500px;
+    padding: 15px;
+    display: block;
+    border-radius: 15px;
+    margin-bottom: 15px;
+    box-shadow: 2px 2px 2px black;
+}
+
+.sender-box{
+    margin-left: 665px;
+    background-color: green;
+}
+
+.receiver-box{
+    background-color: #c2c9d1;
 }

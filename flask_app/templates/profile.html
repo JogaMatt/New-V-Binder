@@ -56,7 +56,11 @@
                 <hr>
                 <div class="profile-links">
                     <a href="/about"><p style="font-size: 14pt; font-weight: 500; margin-right: 25px">About</p></a>
-                    <a href="/messages"><p style="font-size: 14pt; font-weight: 500; margin-right: 25px">Messages</p></a>
+                    {% if my_messages|length >= 1 %}
+                        <a href="/messages"><p style="font-size: 14pt; font-weight: 500; margin-right: 25px">{{my_messages|length}} New Message(s)</p></a>
+                        {% else %}
+                        <a href="/messages"><p style="font-size: 14pt; font-weight: 500; margin-right: 25px">Messages</p></a>
+                    {% endif %}
                     <a href="/friends"><p style="font-size: 14pt; font-weight: 500; margin-right: 25px">Friends</p></a>
                 </div>
             </div>

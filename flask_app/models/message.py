@@ -13,11 +13,11 @@ class Message:
         self.receiver_id = data['receiver_id']
         self.created_at = data['created_at']
         self.update_at = data['update_at']
-        self.user_id = data['user_id']
+        self.chat_id = data['chat_id']
 
     @classmethod
-    def save(cls, data:dict ) -> int:
-        query = "INSERT INTO messages (message_info, sender_id, sender_name, receiver_id, user_id) VALUES ( %(message_info)s, %(sender_id)s, %(sender_name)s, %(receiver_id)s, %(user_id)s);"
+    def save(cls, data):
+        query = "INSERT INTO messages (message_info, sender_id, sender_name, receiver_id, chat_id) VALUES ( %(message_info)s, %(sender_id)s, %(sender_name)s, %(receiver_id)s, %(chat_id)s );"
         return connectToMySQL(DATABASE).query_db( query, data )
 
     @classmethod
@@ -32,4 +32,33 @@ class Message:
         messages = []
         for row in results:
             messages.append( cls(row) )
+        return messages
+
+    @classmethod
+    def messages_in_chat(cls, data):
+        query = "SELECT * FROM messages LEFT JOIN chats ON messages.chat_id = chats.id LEFT JOIN users ON chats.user_id = users.id WHERE messages.chat_id = %(chat_id)s"
+        results = connectToMySQL(DATABASE).query_db(query, data)
+        messages = []
+        for result in results:
+            message_data = {
+            'id': result['id'],
+            'message_info': result['message_info'],
+            'sender_id': result['sender_id'],
+            'sender_name': result['sender_name'],
+            'receiver_id': result['receiver_id'],
+            'created_at': result['created_at'],
+            'update_at': result['update_at'],
+            'chat_id': result['chat_id']
+            }
+            messages.append(message_data)
+        # pprint(messages[0])
+        return messages
+
+    @classmethod
+    def get_my_messages(cls, data):
+        query = "SELECT * FROM messages WHERE receiver_id = %(receiver_id)s;"
+        results = connectToMySQL(DATABASE).query_db(query, data)
+        messages = []
+        for row in results:
+            messages.append(cls(row))
         return messages

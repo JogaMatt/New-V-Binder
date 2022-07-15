@@ -26,9 +26,9 @@ class Card:
 
     @classmethod
     def get_one_with_users(cls, data):
-        query  = "SELECT * FROM cards LEFT JOIN binders ON cards.binder_id = binders.id LEFT JOIN users ON binders.user_id = users.id WHERE cards.card_id = %(id)s and binders.trade = 'Yes';"
+        query  = "SELECT * FROM cards LEFT JOIN binders ON cards.binder_id = binders.id LEFT JOIN users ON binders.user_id = users.id WHERE cards.card_id = %(id)s and binders.trade = 'true';"
         results = connectToMySQL(DATABASE).query_db(query, data)
-        pprint(results)
+        # pprint(results)
         users = []
         for result in results:
             cardHolder_data = {
@@ -36,6 +36,7 @@ class Card:
                 'first_name' : result['first_name'],
                 'last_name' : result['last_name'],
                 'username' : result['username'],
+                'address': result['address'],
                 'profile_icon': result['profile_icon'],
                 'profile_bio': result['profile_bio'],
                 'email' : result['email'],
@@ -44,7 +45,52 @@ class Card:
                 'updated_at' : result['updated_at']
             }
             users.append(User(cardHolder_data))
+        # pprint(users)
         return users
+
+    @classmethod
+    def public_trades(cls):
+        query = "SELECT * FROM cards LEFT JOIN binders ON cards.binder_id = binders.id LEFT JOIN users ON binders.user_id = users.id WHERE binders.trade = 'true' ORDER BY cards.id DESC;"
+        results = connectToMySQL(DATABASE).query_db(query)
+        # pprint(results)
+        cards = []
+        for result in results:
+            card_data = {
+                'id': result['id'],
+                'name': result['name'],
+                'card_condition': result['card_condition'],
+                'image_address': result['image_address'],
+                'card_id': result['card_id'],
+                'binder_id': result['binder_id'],
+                'username': result['username'],
+                'profile_icon': result['profile_icon'],
+                'user_id': result['user_id']
+            }
+            cards.append(card_data)
+        # pprint(cards)
+        return cards
+
+    @classmethod
+    def search_trade_list(cls, data):
+        query = "SELECT * FROM cards LEFT JOIN binders ON cards.binder_id = binders.id LEFT JOIN users ON binders.user_id = users.id WHERE cards.name = %(name)s and binders.trade = 'true' ORDER BY cards.id DESC"
+        results = connectToMySQL(DATABASE).query_db(query, data)
+        # pprint(results)
+        cards = []
+        for result in results:
+            card_data = {
+                'id': result['id'],
+                'name': result['name'],
+                'card_condition': result['card_condition'],
+                'image_address': result['image_address'],
+                'card_id': result['card_id'],
+                'binder_id': result['binder_id'],
+                'username': result['username'],
+                'profile_icon': result['profile_icon'],
+                'user_id': result['user_id']
+            }
+            cards.append(card_data)
+        return cards
+
 
     @classmethod
     def get_my_cards(cls, data):
@@ -75,6 +121,24 @@ class Card:
         response = requests.get(f"https://api.pokemontcg.io/v2/cards/{id}")
         pprint(response)
         return response.json()
+
+    @classmethod
+    def get_one_from_db(cls, data):
+        query = "SELECT * FROM cards WHERE id = %(id)s"
+        results = connectToMySQL(DATABASE).query_db(query, data)
+        card = []
+        for result in results:
+            card_data = {
+                'id': result['id'],
+                'name': result['name'],
+                'card_condition': result['card_condition'],
+                'image_address': result['image_address'],
+                'card_id': result['card_id'],
+                'binder_id': result['binder_id']
+            }
+            card.append(card_data)
+        return card
+
 
     @staticmethod
     def validate_save(card:dict) -> bool:

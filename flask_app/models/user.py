@@ -31,7 +31,7 @@ class User:
 
     @classmethod
     def update(cls,data):
-        query = "UPDATE users SET username=%(username)s, profile_icon=%(profile_icon)s, profile_bio=%(profile_bio)s, address=%(address)s, updated_at=NOW() WHERE id = %(id)s;"
+        query = "UPDATE users SET username=%(username)s, profile_icon=%(profile_icon)s, address=%(address)s, updated_at=NOW() WHERE id = %(id)s;"
         return connectToMySQL(DATABASE).query_db(query,data)
 
         ## ! used in user validation
