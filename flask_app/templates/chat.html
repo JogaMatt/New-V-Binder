@@ -42,7 +42,7 @@
                         </div>
                         {% else %}
                         <div class="receiver-box">
-                            <h4 style="color: red;">{{message.sender_name}}:</h4>
+                            <a href="/profile/{{message.sender_id}}"><h4 style="color: red;">{{message.sender_name}}:</h4></a>
                             <p style="font-weight: 700;">{{message.message_info}}</p>
                         </div>
                     {% endif %}

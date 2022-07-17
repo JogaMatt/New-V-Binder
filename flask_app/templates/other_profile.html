@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/mdb.min.css') }}" />
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/profile.css') }}">
-    <title>{{session['username']}}'s Profile</title>
+    <title>Document</title>
 </head>
 <body>
     <div id="container">
@@ -17,7 +17,7 @@
             <div class="left-nav">
                 <a href="/homepage"><img width="75px" src="{{ url_for('static', filename='image/virtual_binder_logo.png') }}" alt=""></a>
                 <form action="/search_card" method="post">
-                    <input type="text" id="form3Example4cdg" name="search-bar" class="form-control form-control-md search-bar"  placeholder="It all begins here..." />
+                    <input type="text" id="form3Example4cdg" name="search-bar" class="form-control form-control-md search-bar" placeholder="It all begins here..." value='{{search}}'/>
                 </form>
             </div>
             <div class="right-nav">
@@ -33,40 +33,46 @@
         </div>
         <!-- END NAVBAR -->
         <div class="card-container">
-
             <!-- PROFILE TOP -->
             <div class="profile-top">
                 <div class="profile-info">
                     <div class="profile-icon">
-                        {% if current_user.profile_icon == None %}
+                        {% if user.profile_icon == None %}
                             <img class="profile-image" src="{{ url_for('static', filename='image/virtual_binder_logo.png') }}" alt="">
                             {% else %}
-                            <img class="profile-image" src={{current_user.profile_icon}} alt="">
+                            <img class="profile-image" src={{user.profile_icon}} alt="">
                         {% endif %}
                     </div>
                     <div class="profile-text-box">
                         <div class="profile-name">
-                            <p style="font-size: 24pt; margin-bottom: -2px"><b>{{current_user.first_name}} {{current_user.last_name}}</b> ({{current_user.username}})</p>
+                            <p style="font-size: 24pt; margin-bottom: -2px"><b>{{user.first_name}} {{user.last_name}}</b> ({{user.username}})</p>
                         </div>
                         {% if friends|length == 1 %}
                             <p style="font-size: 14pt; font-weight: 500; color: gray">1 friend</p>
                             {% else %}
                             <p style="font-size: 14pt; font-weight: 500; color: gray">{{friends|length}} friends</p>
                         {% endif %}
+                        {% if friend_check|length == 1 and friend_check[0] != 'pending' %}
+                            <p>You are friends</p>
+                            {% elif friend_check[0] == 'pending' %}
+                            <p>Pending...</p>
+                            {% else %}
+                            <form action="/send_request" method="post">
+                                <input type="hidden" name="request_sender_id" value="{{session['user_id']}}">
+                                <input type="hidden" name="request_sender_name" value="{{session['username']}}">
+                                <input type="hidden" name="request_receiver_id" value="{{user.id}}">
+                                <input type="hidden" name="request_receiver_name" value="{{user.username}}">
+                                <input type="hidden" name="user_id" value="{{session['user_id']}}">
+                                <input type="hidden" name="request_approval" value="pending">
+                                <button type="submit" class="add-friend">Add Friend</button>
+                            </form>
+                        {% endif %}
+                        
                     </div>
                 </div>
                 <hr>
                 <div class="profile-links">
-                    <a href="/about"><p style="font-size: 14pt; font-weight: 500; margin-right: 25px">About</p></a>
-                    {% if my_messages|length >= 1 %}
-                        <a href="/messages"><p style="font-size: 14pt; font-weight: 500; margin-right: 25px">{{my_messages|length}} New Message(s)</p></a>
-                        {% else %}
-                        <a href="/messages"><p style="font-size: 14pt; font-weight: 500; margin-right: 25px">Messages</p></a>
-                    {% endif %}
-                    <a href="/friends"><p style="font-size: 14pt; font-weight: 500; margin-right: 25px">Friends</p></a>
-                        {% if requests|length > 0 %}
-                            <a href="/friends/requests/{{session['user_id']}}"><p style="font-size: 14pt; font-weight: 400; margin-left: -15px">(New Requests)</p></a>
-                        {% endif %}
+                    <a href="/{{user.id}}/friends"><p style="font-size: 14pt; font-weight: 500; margin-right: 25px">Friends</p></a>
                 </div>
             </div>
             <!-- END PROFILE TOP -->
@@ -74,7 +80,7 @@
             <!-- PROFILE BOTTOM -->
             <div class="profile-bottom">
                 <div class="profile-bottom-left">
-                    {% for binder in my_binders %}
+                    {% for binder in binders %}
                         <a href="/binder/{{binder.id}}"><div class="binder">
                             <p style="font-size: 16; font-weight: 700; color: gray">{{binder.name}}</p>
                         </div></a>

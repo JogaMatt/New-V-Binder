@@ -3,6 +3,7 @@ from flask import render_template,redirect,request,session,flash
 from flask_app.models.binder import Binder
 from flask_app.models.message import Message
 from flask_app.models.user import User
+from flask_app.models.friend import Friend
 
 from pprint import pprint
 
@@ -99,7 +100,32 @@ def profile():
     }
     my_messages = Message.get_my_messages(data)
     
-    return render_template('profile.html', my_binders = my_binders, current_user = current_user, my_messages = my_messages)
+    data = {
+        'id': session['user_id']
+    }
+    friends = Friend.get_my_friends(data)
+    requests = Friend.get_my_requests(data)
+    pprint(friends)
+    
+    return render_template('profile.html', my_binders = my_binders, current_user = current_user, my_messages = my_messages, friends = friends, requests = requests)
+
+# ~~~~~ GO TO OTHER USER'S PROFILE ~~~~~
+@app.route('/profile/<id>')
+def other_profile(id):
+    data = {
+        'id': id
+    }
+    user = User.get_by_id(data)
+    binders = Binder.get_current_users_binders(data)
+    friends = Friend.get_my_friends(data)
+    
+    data = {
+        'id_one': session['user_id'],
+        'id_two': id
+    }
+    friend_check = Friend.friend_check(data)
+    # print(friend_check)
+    return render_template('other_profile.html', user = user, binders = binders, friends = friends, friend_check = friend_check)
 
 # ~~~~~ EDIT PROFILE INFO ~~~~~
 @app.route('/about')

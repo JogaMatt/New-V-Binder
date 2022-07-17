@@ -36,36 +36,29 @@
             <table class="table align-middle mb-0 bg-white">
                 <thead class="bg-light">
                   <tr>
-                    <!-- <th>Participants</th> -->
-                    <th>Subject</th>
+                    <th>Username</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
-                    {% for chat in all_chats %}
-                        {% if chat.chat_receiver_id == session['user_id'] or chat.chat_sender_name == session['username'] %}
+                    {% for request in requests %}
                             <tr>
-                                <!-- <td>
+                                <td>
                                 <div class="d-flex align-items-center">
                                     <div class="ms-3">
-                                        <p class="fw-bold mb-1"><a href="/profile/{{chat.user_id}}">{{chat.chat_sender_name}}</a></p>
+                                        <a href="/profile/{{request.request_sender_id}}"><p class="fw-bold mb-1">{{request.request_sender_name}}</p></a>
                                     </div>
                                 </div>
-                                </td> -->
-                                <td>
-                                <p class="fw-bold mb-1">{{chat.chat_name}}</p>
                                 </td>
                                 <td>
-                                <a href="/chat/{{chat.id}}">
-                                    Open
+                                <a href="/approve/{{request.id}}">
+                                    Approve
                                 </a>
-                                <a href="/delete_message/{{chat.id}}">
-                                    Delete
+                                <a href="/deny/{{request.id}}">
+                                    Deny
                                 </a>
-                                
                                 </td>
                             </tr>
-                        {% endif %}
                     {% endfor %}
                 </tbody>
               </table>

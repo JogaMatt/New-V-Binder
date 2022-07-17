@@ -39,4 +39,32 @@ class Friend:
             friends.append( cls(row) )
         return friends
 
-    
+    @classmethod
+    def get_my_friends(cls, data):
+        query = "SELECT * FROM friends WHERE request_receiver_id = %(id)s AND request_approval = 'approved' OR request_sender_id = %(id)s AND request_approval = 'approved';"
+        results = connectToMySQL(DATABASE).query_db(query, data)
+        friends = []
+        for row in results:
+            friends.append( cls(row) )
+        return friends
+
+    @classmethod
+    def get_my_requests(cls, data):
+        query = "SELECT * FROM friends WHERE request_approval = 'pending' AND request_receiver_id = %(id)s;"
+        results = connectToMySQL(DATABASE).query_db(query, data)
+        requests = []
+        for row in results:
+            requests.append( cls(row) )
+        return requests
+
+    @classmethod
+    def friend_check(cls, data):
+        query = "SELECT * FROM friends WHERE request_receiver_id = %(id_one)s AND request_sender_id = %(id_two)s AND request_approval = 'approved' OR request_receiver_id = %(id_two)s AND request_sender_id = %(id_one)s AND request_approval = 'approved'"
+        result = connectToMySQL(DATABASE).query_db(query, data)
+        # pprint(result)
+        friends = []
+        for row in result:
+            friends.append( cls(row) )
+        if len(friends) == 0:
+            friends.append('pending')
+        return friends
