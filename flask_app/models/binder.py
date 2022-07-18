@@ -1,3 +1,4 @@
+from unittest import result
 from flask_app.config.mysqlconnection import connectToMySQL
 from flask_app import flash, re
 from pprint import pprint
@@ -46,18 +47,20 @@ class Binder:
     def get_one(cls,data):
         query  = "SELECT * FROM binders LEFT JOIN cards ON binders.id = cards.binder_id WHERE binders.id = %(id)s";
         results = connectToMySQL(DATABASE).query_db(query,data)
-        # pprint(results)
-        user = cls(results[0])
+        cards = []
         for result in results:
             # pprint(result)
-            binder_data = {
-                'id': result['binders.id'],
-                'name': result['name'], 
+            data = {
+                'binder_id': result['binder_id'],
+                'card_condition': result['card_condition'],
+                'card_id': result['card_id'],
+                'cards_id': result['cards.id'],
+                'cards_name': result['cards.name'],
+                'id': result['id'],
+                'image_address': result['image_address'],
+                'name': result['name'],
                 'trade': result['trade'],
-                'user_id': result['user_id'],
-                'created_at': result['binders.created_at'],
-                'updated_at': result['binders.updated_at']
+                'user_id': result['user_id']
             }
-            user.binders.append(Binder(binder_data))
-        pprint(user.binders)
-        return user
+            cards.append(data)
+        return cards

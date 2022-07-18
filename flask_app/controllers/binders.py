@@ -1,8 +1,9 @@
 from flask_app import app
-from flask import render_template,redirect,request,session,flash
+from flask import current_app, render_template,redirect,request,session,flash
 from flask_app.models.user import User
 from flask_app.models.card import Card
 from flask_app.models.binder import Binder
+from pprint import pprint
 
 @app.route('/create_binder')
 def create_binder():
@@ -20,3 +21,18 @@ def save_binder():
 
     Binder.save(data)
     return redirect('/homepage')
+
+# ~~~~~ VIEW CONTENTS OF BINDER ~~~~~
+@app.route('/binder/<binder_id>')
+def view_binder(binder_id):
+    if 'user_id' not in session:
+        return redirect('/login')
+
+    data = {
+        'id': binder_id
+    }
+
+    current_binder = Binder.get_one(data)
+    session['binder_id'] = current_binder[0]['binder_id']
+
+    return render_template('mybinder.html', current_binder = current_binder)

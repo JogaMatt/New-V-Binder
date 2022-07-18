@@ -105,3 +105,54 @@ a{
     box-shadow: 3px 3px 3px #243b55;
     background-color: #f5f6f7;
 }
+
+.card-block-container{
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+
+.card-block{
+    width: 300px;
+    height: 540px;
+    background-color: white;
+    padding: 15px;
+    margin-right: 12px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    box-shadow: 3px 3px 3px gray;
+}
+
+.pokemon-card{
+    width: 269px;
+    height: 404px;
+    margin: auto;
+    border-radius: 15px;
+    box-shadow: 3px 3px 3px gray;
+}
+
+.delete-button{
+    height: 48px;
+    width: 269px;
+    background-image: linear-gradient(109.6deg, rgb(250, 81, 81), rgb(224, 117, 117), rgb(250, 81, 81) );
+    border: none;
+    border-radius: 5px;
+    font-size: x-large;
+    font-weight: 600;
+    color: ghostwhite;
+    box-shadow: 2px 2px 2px #141e30;
+    margin-top: 15px;
+}
+
+.message-button{
+    height: 48px;
+    width: 269px;
+    background-image: linear-gradient(109.6deg, rgb(117 159 224) 11.2%, rgb(151 110 251) 91.1% );
+    border: none;
+    border-radius: 5px;
+    font-size: x-large;
+    font-weight: 600;
+    color: ghostwhite;
+    box-shadow: 2px 2px 2px #141e30;
+    margin-top: 15px;
+}

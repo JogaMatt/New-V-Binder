@@ -76,7 +76,22 @@ def save_to_binder():
 
     session['binder_id'] = request.form['binder_id']
 
-    return redirect('/homepage')
+    return redirect(f'/binder/{session["binder_id"]}')
+
+# ~~~~~ REMOVE CARD FROM BINDER ~~~~~
+@app.route('/delete/<card_id>')
+def remove_card(card_id):
+    data = {
+        'id': card_id
+    }
+    card = Card.get_one_with_users_new(data)
+    # pprint(card[0])
+    if card[0]['id'] != session['user_id']:
+        flash("Can not delete cards that are not yours")
+        return redirect('/profile')
+    else:
+        Card.delete(data)
+    return redirect(f'/binder/{session["binder_id"]}')
 
 
 # ~~~~~ GO TO PUBLIC TRADES ~~~~~

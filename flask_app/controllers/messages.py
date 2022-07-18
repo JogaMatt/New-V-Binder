@@ -21,9 +21,9 @@ def inquiry_card(user_id, card_id):
         'id': card_id
     }
     current_card = Card.get_one_from_db(data)
-    pprint(current_card)
+    # pprint(current_card)
     current_chat = Chat.last_chat()
-    pprint(current_chat)
+    # pprint(current_chat)
     return render_template('message.html', receiver = receiver, current_card = current_card[0], current_chat = current_chat[0])
 
 # ~~~~~ SEND MESSAGE ~~~~~

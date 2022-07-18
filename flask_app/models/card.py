@@ -49,6 +49,30 @@ class Card:
         return users
 
     @classmethod
+    def get_one_with_users_new(cls, data):
+        query  = "SELECT * FROM cards LEFT JOIN binders ON cards.binder_id = binders.id LEFT JOIN users ON binders.user_id = users.id WHERE cards.id = %(id)s and binders.trade = 'true';"
+        results = connectToMySQL(DATABASE).query_db(query, data)
+        # pprint(results)
+        users = []
+        for result in results:
+            cardHolder_data = {
+                'id' : result['users.id'],
+                'first_name' : result['first_name'],
+                'last_name' : result['last_name'],
+                'username' : result['username'],
+                'address': result['address'],
+                'profile_icon': result['profile_icon'],
+                'profile_bio': result['profile_bio'],
+                'email' : result['email'],
+                'password' : result['password'],
+                'created_at' : result['users.created_at'],
+                'updated_at' : result['updated_at']
+            }
+            users.append(cardHolder_data)
+        # pprint(users)
+        return users
+
+    @classmethod
     def public_trades(cls):
         query = "SELECT * FROM cards LEFT JOIN binders ON cards.binder_id = binders.id LEFT JOIN users ON binders.user_id = users.id WHERE binders.trade = 'true' ORDER BY cards.id DESC;"
         results = connectToMySQL(DATABASE).query_db(query)

@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/mdb.min.css') }}" />
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/mybinder.css') }}">
-    <title>Document</title>
+    <title>{{current_binder[0].name}}</title>
 </head>
 <body>
     <div id="container">
@@ -32,6 +32,32 @@
             </div>
         </div>
         <!-- END NAVBAR -->
+        <div class="card-container">
+            <div class="card-block-container">
+                    {% for card in current_binder %}
+                        {% if card.cards_name == None %}
+                            <h1>Empty</h1>
+                            {% else %}
+                            <div class="card-block">
+                                <p style="font-weight: 700;">{{card.cards_name}}</p>
+                                <a href="/details/{{card.card_id}}"><img class="pokemon-card" src={{card.image_address}} alt=""></a>
+                                {% if card.user_id == session['user_id'] %}
+                                    <a href="/delete/{{card.cards_id}}">
+                                        <button class="delete-button">Remove</button>
+                                    </a>
+                                    {% else %}
+                                    <form action="/create_chat/{{card.user_id}}/{{card.cards_id}}" method="post">
+                                        <input type="hidden" name="chat_name" value="Info about {{card.cards_name}}">
+                                        <input type="hidden" name="chat_receiver_id" value="{{card.user_id}}">
+                                        <button type="submit" class="message-button">Message</button>
+                                    </form>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                        
+                    {% endfor %}
+            </div>
+        </div>
     </div>
 </body>
 </html>
