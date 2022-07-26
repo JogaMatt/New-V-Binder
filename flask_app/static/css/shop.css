@@ -1,0 +1,143 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+
+#container{
+    width: inherit;
+    background-image: linear-gradient(to bottom, #243b55, #141e30);
+    /* height: 1200px; */
+}
+
+.navbar{
+    width: inherit;
+    height: 100px;
+    padding: 15px;
+    justify-content: space-between;
+    background-color: white;
+    border-bottom: 5px solid black;
+}
+
+.left-nav{
+    width: 800px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.search-bar{
+    width: 700px;
+    border-radius: 30px;
+}
+
+.right-nav{
+    width: 650px;
+}
+
+.links{
+    display: flex;
+    justify-content: space-between;
+}
+
+a{
+    text-decoration: none;
+    color: black;
+}
+
+.home-content{
+    width: 1400px;
+    /* height: 50px; */
+    background-image: linear-gradient(to bottom, #e1e7ea, #8194a9);
+    margin: auto;
+    padding: 100px 20px 20px 20px;
+}
+
+.banner-one{
+    width: 970px;
+    height: 350px;
+    margin: auto;
+    background-image: url('https://c2.peakpx.com/wallpaper/919/199/765/mountains-switzerland-view-wallpaper-preview.jpg');
+    display: flex;
+    /* justify-content: space-between; */
+    border-radius: 5px;
+}
+
+.poke-go{
+    width: 60%;
+    margin-left: 30px;
+}
+
+.banner-text-box{
+    padding: 20px;
+    width: 450px;
+}
+
+.banner-one-image{
+    width: 287px;
+    height: 400px;
+    margin-top: -30px;
+    transform: matrix3d(
+        1.1, 0, -2, -0.0004,
+        0, 1.2, 0, 0,
+        0, 0, 1, 0,
+        0, 0, 0, 1
+    )
+}
+
+.banner-filler{
+    width: 1000px;
+    height: 380px;
+    background-color: black;
+    margin: auto;
+    padding: 15px;
+    border-radius: 15px;
+}
+
+.card-container{
+    width: 1600px;
+    height: 1641px;
+    margin: auto;
+    background-color: #dde1e4;
+    padding: 20px;
+}
+
+.card-block-container{
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+
+.card-block{
+    width: 300px;
+    height: 600px;
+    background-color: white;
+    padding: 15px;
+    margin-right: 12px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    box-shadow: 3px 3px 3px gray;
+}
+
+.pokemon-card{
+    width: 269px;
+    height: 404px;
+    margin: auto;
+    border-radius: 15px;
+    box-shadow: 3px 3px 3px gray;
+}
+
+.message-button{
+    width: 100px;
+    background-image: linear-gradient(109.6deg, rgb(117 159 224) 11.2%, rgb(151 110 251) 91.1% );
+    border: none;
+    border-radius: 5px;
+    font-size: medium;
+    font-weight: 600;
+    color: ghostwhite;
+    box-shadow: 2px 2px 2px #141e30;
+}
+
+#buy-now{
+    vertical-align: top;
+}

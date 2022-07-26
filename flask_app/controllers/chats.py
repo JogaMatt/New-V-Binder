@@ -26,5 +26,8 @@ def open_chat(chat_id):
         'chat_id': chat_id
     }
     current_chat = Message.messages_in_chat(data)
-    # pprint(current_chat[0])
-    return render_template('chat.html', current_chat = current_chat)
+
+    if session['user_id'] == current_chat[0]['sender_id'] or session['user_id'] == current_chat[0]['receiver_id']:
+        return render_template('chat.html', current_chat = current_chat)
+    else:
+        return redirect('/profile')

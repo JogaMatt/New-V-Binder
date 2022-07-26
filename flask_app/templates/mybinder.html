@@ -27,6 +27,7 @@
                     <a href="/expansions/1"><h5>Expansions</h5></a>
                     <a href="/create_binder"><h5>Create Binder</h5></a>
                     <a href="/trades"><h5>Public Trades</h5></a>
+                    <a href="/shop"><h5>Marketplace</h5></a>
                     <a href="/sign_out"><h5>Sign Out</h5></a>
                 </div>
             </div>
@@ -43,13 +44,13 @@
                                 <a href="/details/{{card.card_id}}"><img class="pokemon-card" src={{card.image_address}} alt=""></a>
                                 {% if card.user_id == session['user_id'] %}
                                     <a href="/delete/{{card.cards_id}}">
-                                        <button class="delete-button">Remove</button>
+                                        <button class="delete-button">REMOVE</button>
                                     </a>
                                     {% else %}
                                     <form action="/create_chat/{{card.user_id}}/{{card.cards_id}}" method="post">
                                         <input type="hidden" name="chat_name" value="Info about {{card.cards_name}}">
                                         <input type="hidden" name="chat_receiver_id" value="{{card.user_id}}">
-                                        <button type="submit" class="message-button">Message</button>
+                                        <button type="submit" class="message-button">MESSAGE</button>
                                     </form>
                                 {% endif %}
                             </div>

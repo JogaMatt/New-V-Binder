@@ -1,13 +1,23 @@
-from flask_app import app, Bcrypt
-from flask import render_template,redirect,request,session,flash
+from itertools import product
+import json
+from flask_app import app, Bcrypt, stripe
+from flask import render_template,redirect,request,session,flash,url_for
 from flask_app.models.binder import Binder
 from flask_app.models.message import Message
 from flask_app.models.user import User
 from flask_app.models.friend import Friend
-
 from pprint import pprint
 
 bcrypt = Bcrypt(app)
+
+app.config['STRIPE_PUBLIC_KEY'] = 'pk_test_51LNI6ACh5HPOp3tbdJKcRoWH2cvWqZWn9FMK7j4tGTlCgHK8mcg7mXWFqrg0jxjlZTsZQX8VBItlKzWciAe3TAuv00w8kzrh25'
+app.config['STRIPE_SECRET_KEY'] = 'sk_test_51LNI6ACh5HPOp3tb8ggo5YoHdI5bTNmTn9aBYQcNIcjb4KmiD8a5psrIOa2Jto2jxGOVo5fBJGUCgab0kohH9bg300Nlju5261'
+
+stripe.api_key = app.config['STRIPE_SECRET_KEY']
+
+def cart():
+    cart = session['cart']
+    return cart
 
 @app.route('/')
 def landingpage():
@@ -67,6 +77,7 @@ def sign_in():
         return redirect('/login')
     session['user_id'] = user_in_db.id
     session['username'] = user_in_db.username
+
     return redirect("/homepage")
 
 # ~~~~~ LOG OUT ~~~~~
@@ -163,3 +174,60 @@ def save_update():
     User.update(data)
 
     return redirect('/profile')
+
+# ~~~~~ GO TO MARKETPLACE ~~~~~
+@app.route('/shop')
+def shop():
+
+    products = [{
+        'product_image': 'https://images.pokemontcg.io/swsh7/215_hires.png',
+        'product_name': 'Umbreon VMAX (Alternate Art)',
+        'product_id': 'prod_M5TNNnnbO0mRpR',
+        'price': 'price_1LNIQbCh5HPOp3tbwt8HWoZo'
+    }]
+    return render_template('marketplace.html', products = products)
+
+# ~~~~~ ADD TO CART ~~~~~
+@app.route('/add_cart', methods = ['POST'])
+def add_cart():
+
+    def  array_merge(arr1, arr2):
+        return arr1 + arr2
+    
+    product = [{
+        # 'product_image': request.form['product_image'],
+        'price': request.form['price'],
+        'adjustable_quantity': {
+            'enabled': True,
+            'minimum': 1,
+            'maximum': 10,
+        },
+        'quantity': 1
+    }]
+    if 'cart' not in session:
+        session['cart'] = product
+    else:
+        session['cart'] = array_merge(session['cart'], product)
+    pprint(session['cart'])
+
+    
+
+
+    return redirect('/shop')
+
+# ~~~~~ STRIPE PAY ~~~~~
+@app.route('/stripe_pay')
+def stripe_pay():
+    cart_items = cart()
+    pprint(cart_items)
+    session = stripe.checkout.Session.create(
+        payment_method_types = ['card'],
+        line_items = cart_items,
+        mode = 'payment',
+        success_url = url_for('profile', _external = True) + '?session_id={CHECKOUT_SESSION_ID}',
+        cancel_url = url_for('shop', _external = True)
+    )
+    return {
+        'checkout_public_key': app.config['STRIPE_PUBLIC_KEY'],
+        'checkout_session_id': session['id']
+    }

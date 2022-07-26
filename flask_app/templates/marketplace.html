@@ -7,12 +7,11 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/mdb.min.css') }}" />
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/expansions.css') }}">
-    <title>Expansions</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/shop.css') }}">
+    <title>Marketplace</title>
 </head>
 <body>
     <div id="container">
-
         <!-- NAVBAR -->
         <div class="navbar">
             <div class="left-nav">
@@ -34,24 +33,24 @@
             </div>
         </div>
         <!-- END NAVBAR -->
-
-        <!-- CARD CONTAINER -->
         <div class="card-container">
-            <div class="card-block-container">
-                {% for set in all_expansions %}
-                    <div class="card-block">
-                        <p style="font-weight: 700;">{{set.name}}</p>
-                        <img class="set-logo" src={{set.images.logo}} alt="">
-                    </div>
-                {% endfor %}
-            </div>
-            <!-- {% if cards|length >= 15 %}
-                <h1 style="color: black;">{{current_page}} of {{ (all_cards|length / 15)|round|int }}</h1>
-                {% else %}
-                <h1 style="color: black;">There's no more!</h1>
-            {% endif %} -->
+            {% for product in products %}
+                <div class="card-block">
+                    <form action="/add_cart" method="post">
+                        <input type="hidden" name="product_image" value="{{product['product_image']}}" id="">
+                        <input type="hidden" name="product_id" value="{{product['product_id']}}" id="">
+                        <input type="hidden" name="price" value="{{product['price']}}" id="">
+                        <p style="font-weight: 700;" name="product_name">{{product['product_name']}}</p>
+                        <img class="pokemon-card" src="{{product['product_image']}}" alt="">
+                        <p style="font-weight: 700; font-size: x-large; margin-top: 15px;">$319.99</p>
+                        <button type="submit" id="add-to-cart" style="width: 130px; height: 50px">Add to Cart</button>
+                    </form>
+                </div>
+            {% endfor %}
         </div>
-        <!-- END CARD CONTAINER -->
+        <button id="check_out" style="width: 130px; height: 50px" onclick="pay(this)">Check Out</button>
     </div>
+    <script src="https://js.stripe.com/v3/"></script>
+    <script src="{{ url_for('static', filename='javascript/script-ajax.js') }}"></script>
 </body>
 </html>
